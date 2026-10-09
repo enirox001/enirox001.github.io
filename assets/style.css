@@ -7,3 +7,6 @@
 
 /* Book covers adapt to each title and author. */
 .book-cover strong{font-size:28px;overflow-wrap:anywhere}.book-cover{min-height:280px}.cover-deep-work{background:#31585a;border-color:#64888b;border-left-color:#244042}.cover-the-magic-of-thinking-big{background:#693a32;border-color:#966458;border-left-color:#4a2923}.cover-mastering-bitcoin{background:#71502e;border-color:#9b794d;border-left-color:#52391f}.cover-onboarding-to-bitcoin-core{background:#414e39;border-color:#6f7c5a;border-left-color:#2e3728}.muted{color:var(--muted)}
+
+/* Long-form articles retain readable headings, lists, and serialized examples. */
+.article-body{margin-top:32px}.article-body h2{margin:40px 0 18px}.article-body ul,.article-body ol{padding-left:25px;margin:0 0 24px}.article-body li{padding-left:4px;margin-bottom:9px}.article-body pre{max-width:100%;overflow-x:auto;padding:16px 18px;margin:22px 0;background:var(--panel);border:1px solid var(--line);border-radius:3px;line-height:1.7;tab-size:4}.article-body pre code{font-size:13px;overflow-wrap:normal;white-space:pre}.article-body a{overflow-wrap:anywhere}

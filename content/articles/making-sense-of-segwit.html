@@ -1,0 +1,100 @@
+<p>Bitcoin has changed a lot since its inception, some of the changes are quite big, and others not as much. One of the changes that would fall in the former category would be Segregated Witness, or as most would call it, Segwit.</p>
+<p>Segwit was described in BIP 141 in December 2015, and by August 2017 it was activated on Bitcoin mainnet.</p>
+<p>But before we speak about what Segwit is and why it was introduced (and dive into the technicals a bit), let us see what Bitcoin looked like pre segwit.</p>
+<h2>Before Segwit</h2>
+<p>Before Segwit, transactions were a bit different, simpler in transaction structure. The major things to note were:</p>
+<ul>
+<li>Transactions used the legacy format, where the signature and unlocking data were stored in the input’s scriptSig.</li>
+<li>This data was included in calculating the transaction id.</li>
+<li>Bitcoin had a straightforward 1 MB block size limit, or 1,000,000 bytes.</li>
+</ul>
+<p>To illustrate, let me take you through a typical transaction pre segwit.</p>
+<p>Say Alice wants to send bitcoin to Bob, spending a pay to public key hash (p2pkh) output. Her transaction has an input pointing to the output she wants to spend, and outputs specifying where the bitcoin goes.</p>
+<p>The input references the previous transaction’s id and the output’s index. Its scriptsig contains:</p>
+<pre><code>
+&lt;signature&gt; &lt;public key&gt;
+
+</code></pre>
+<p>The public key must match the hash in the output Alice is spending, and the signature must be valid for the spend.</p>
+<p>The simplified transaction structure looks like this (the input and output lists include their counts):</p>
+<pre><code>
+version, inputs, outputs, locktime
+
+</code></pre>
+<p>To get the transaction id, or txid, we hash the serialized transaction twice using sha256. So the signature is part of what determines that id.</p>
+<h2>And the Merkle tree?</h2>
+<p>The block’s transaction ids, including the coinbase transaction’s id, form the leaves of a Merkle tree.</p>
+<p>We take pairs of ids, concatenate them, and hash them twice using sha256. We repeat this with the resulting hashes until there is one hash left, the merkle root. If a level has an odd number of hashes, the last one is duplicated before pairing.</p>
+<p>The root goes in the block header. Changing a transaction changes its id, which changes the hashes above it and ultimately the root. This is how the header commits to the transactions in the block.</p>
+<p>Before segwit, the signatures were included in that commitment through the transaction ids.</p>
+<h2>So what was the problem?</h2>
+<p>One problem was transaction malleability.</p>
+<p>In some cases, someone could modify a transaction’s unlocking data while keeping the transaction valid. The bitcoin would still go to the same place, but the transaction id would change.</p>
+<p>Now imagine another transaction was already created to spend an output from that transaction. It references the original id. If the modified version confirms instead, that reference no longer points to the confirmed transaction.</p>
+<p>This is one of the problems Segwit addresses.</p>
+<h2>What changed with Segwit?</h2>
+<p>The idea is to separate the witness, the data used to satisfy the spending conditions, from the part used to calculate the transaction id.</p>
+<p>For the native Segwit equivalent of our p2pkh example, called p2wpkh, the signature and public key go in the input’s witness, and the scriptsig is empty:</p>
+<pre><code>
+previous output scriptpubkey: OP_0 &lt;20 byte public key hash&gt;
+
+spending input scriptsig: empty
+
+spending input witness: &lt;signature&gt; &lt;public key&gt;
+
+</code></pre>
+<p>The signature still has to be checked. We have changed where the data goes.</p>
+<p>The full transaction serialization now looks like:</p>
+<pre><code>
+version, marker, flag, inputs, outputs, witnesses, locktime
+
+</code></pre>
+<p>The marker is 0x00 and the flag is 0x01. Each witness belongs to an input, but the witness stacks are serialized after the outputs, in the same order as the inputs.</p>
+<p>There are also two ids:</p>
+<ul>
+<li>txid: calculated without the marker, flag, and witness stacks.</li>
+<li>wtxid: calculated with the full witness inclusive serialization.</li>
+</ul>
+<p>Both use double sha256. Changing only the witness changes the wtxid, but leaves the txid unchanged. Transactions still reference previous outputs using the txid.</p>
+<p>For appropriately signed transactions whose inputs all use Segwit, this addresses involuntary transaction id malleability. Legacy inputs can still introduce the old problem, and legacy transactions are still valid.</p>
+<h2>What happens to the Merkle tree now?</h2>
+<p>The original Merkle tree is still there, built from transaction ids, and its root still goes in the block header.</p>
+<p>But these ids no longer include the witness. So how do we make sure the block also commits to that data?</p>
+<p>Segwit adds a second tree, the <strong>witness Merkle tree</strong>, built from the wtxid values. For this tree, the coinbase transaction’s leaf is set to 32 zero bytes.</p>
+<p>Its root is used to create a witness commitment:</p>
+<pre><code>
+commitment = sha256(sha256(witness root || witness reserved value))
+
+</code></pre>
+<p>Here, || means concatenation. The reserved value is a single 32 byte item in the coinbase input’s witness.</p>
+<p>The commitment goes in an OP_RETURN output of the coinbase transaction:</p>
+<pre><code>
+OP_RETURN &lt;aa21a9ed followed by the 32 byte commitment&gt;
+
+</code></pre>
+<p>So the witnesses themselves stay in their respective transactions. The coinbase input holds the reserved value, while a coinbase output holds the commitment.</p>
+<p>That output is part of the coinbase’s txid, which is part of the original Merkle tree. Through the coinbase, the block header therefore commits to the witness data too.</p>
+<p>Using a zero leaf for the coinbase in the witness tree avoids a circular dependency that is its commitment depends on the witness root, so we cannot also make that root depend on the coinbase’s actual witness transaction id.</p>
+<p>This was introduced as a soft fork. Older nodes can check the block without witness data using their existing rules, while upgraded nodes also check the witness commitment and spending rules.</p>
+<h2>And the 1 MB limit?</h2>
+<p>Segwit introduced block weight, with a maximum of <strong>4,000,000 weight units</strong>:</p>
+<pre><code>
+weight = (stripped size × 3) + total size
+
+</code></pre>
+<p>Stripped size excludes witness related serialization; total size includes it. Base bytes cost four weight units each, while the additional witness serialization costs one per byte.</p>
+<p>For example, a transaction with 100 bytes of stripped data and 210 bytes in total weighs:</p>
+<pre><code>
+(100 × 3) + 210 = 510 weight units
+
+</code></pre>
+<p>Divide by four and round up, and we get <strong>128 virtual bytes</strong>, or vB. This is the size used when expressing a fee rate in satoshis per vB.</p>
+<p>Blocks can therefore be larger than 1 MB when they include witness data, but how much larger depends on what is in the block.</p>
+<p>So that is the main idea behind Segwit: separate the witness from the transaction id, commit to it through the coinbase, and count it differently when measuring block weight.</p>
+<h2>References</h2>
+<ul>
+<li><a href="https://bitcoincore.org/en/2016/01/26/segwit-benefits/">SegWit Benefits</a></li>
+<li><a href="https://btctranscripts.com/chaincode-residency/2019-06-18-james-obeirne-advanced-segwit">Advanced SegWit w/ James O&#x27;Beirne</a></li>
+<li><a href="https://bips.dev/144/">BIP 144</a></li>
+<li><a href="https://bips.dev/141/">BIP 141</a></li>
+</ul>

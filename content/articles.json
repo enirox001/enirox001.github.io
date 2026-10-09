@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "slug": "making-sense-of-segwit",
+    "title": "Making Sense of Segwit",
+    "date": "2026-10-09",
+    "description": "Bitcoin before and after Segwit: transaction IDs, witness data, Merkle trees, and block weight."
+  }
+]

@@ -119,7 +119,7 @@ page('/articles/', 'Articles', 'Articles by Enoch Azariah about Bitcoin and soft
 for article in ARTICLES:
     body_path = ROOT / 'content/articles' / (article['slug'] + '.html')
     page('/articles/' + article['slug'] + '/', article['title'], article['description'],
-         '<a class="back" href="/articles/">← All articles</a><h1>' + e(article['title']) + '</h1><p class="meta">' + e(article['date']) + '</p><article>' + body_path.read_text() + '</article>', '/articles/')
+         '<a class="back" href="/articles/">← All articles</a><h1>' + e(article['title']) + '</h1><p class="meta">' + e(article['date']) + '</p><article class="article-body">' + body_path.read_text() + '</article>', '/articles/')
 
 page('/books/', 'Bookshelf', 'Books Enoch Azariah is reading, with reading status and personal notes.', f'''
 <p class="eyebrow">Away from the code editor</p><h1>Bookshelf</h1>
