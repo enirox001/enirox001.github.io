@@ -1,0 +1,46 @@
+# enirox’s personal website
+
+A small, static GitHub Pages site. Live at https://enirox001.github.io/.
+
+## Editing
+
+The source for page content and the shared layout is `scripts/build.py`. The
+bookshelf is maintained in `content/books.json`. Styling and theme behaviour
+live in `assets/`. No packages, framework, or Jekyll installation are required.
+
+After editing, use Python 3.12 or newer:
+
+```sh
+python3 scripts/build.py
+```
+
+Commit the changed sources **and generated HTML**. GitHub Pages serves the root
+of `main`; the existing `.nojekyll` file keeps this a plain static site.
+The build script never deletes files or writes under `coverage/`.
+
+To preview locally:
+
+```sh
+python3 -m http.server 8000
+```
+
+Visit http://localhost:8000/. Content and navigation work without JavaScript;
+JavaScript only controls the saved colour theme. Fonts are local system fonts.
+
+## Bookshelf
+
+Each book has a unique URL-safe `slug`, a title, authors, a reading status,
+category, personal note, and publisher URL. Add actual reading entries to
+`content/books.json`, then run the build. Book artwork is an original typographic
+representation, not a reproduction of the publisher’s cover.
+
+## Design references
+
+- https://ludwigabap.com/ — Gruvbox palette, restrained typography and text-first layout.
+- https://ismaelsadeeq.github.io/ — personal introduction and a bookshelf with reading status.
+- https://achow101.com/ — articles, contact, and notable/current/previous project sections.
+
+Implementation is original. The site does not copy another person’s biography,
+book reviews, reading history, or proprietary fonts. Published notebook entries
+are linked to their existing GitHub files; unpublished article drafts are not
+presented as finished posts.

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" data-theme="gruvbox">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects · enirox</title>
+  <meta name="description" content="Current projects, notable Bitcoin Core work, and earlier projects by Enoch Azariah.">
+  <meta name="author" content="Enoch Azariah">
+  <meta name="color-scheme" content="dark light">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Projects · enirox">
+  <meta property="og:description" content="Current projects, notable Bitcoin Core work, and earlier projects by Enoch Azariah.">
+  <meta property="og:url" content="https://enirox001.github.io/projects/">
+  <link rel="canonical" href="https://enirox001.github.io/projects/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="shell">
+    <header class="site-header"><a class="wordmark" href="/" aria-label="enirox home">enirox<span>.</span></a><nav aria-label="Main navigation"><a href="/">Home</a><a href="/articles/">Articles</a><a href="/projects/" aria-current="page">Projects</a><a href="/books/">Bookshelf</a><a href="/contact/">Contact</a></nav></header>
+    <main id="main">
+<p class="eyebrow">Code, experiments & contributions</p><h1>Projects</h1>
+<p class="subtitle page-intro">Most of my open-source work is on <a href="https://github.com/enirox001">GitHub</a>. Here are a few things I’ve been working on.</p>
+<section><div class="section-heading"><span class="section-index">01</span><h2>Notable work</h2></div><ul class="rows">
+<li><span class="meta">Bitcoin Core · #35118</span><a class="row-title" href="https://github.com/bitcoin/bitcoin/pull/35118">IPC round-trip fuzz target <span aria-hidden="true">↗</span></a><p class="row-desc">A fuzz target exercising the Cap’n Proto / libmultiprocess serialization bridge and client–server interaction.</p></li>
+<li><span class="meta">Bitcoin Core · #35916</span><a class="row-title" href="https://github.com/bitcoin/bitcoin/pull/35916">Expanding IPC fuzz coverage <span aria-hidden="true">↗</span></a><p class="row-desc">Work on argument checks, callbacks, and raw request and response payloads.</p></li>
+<li><span class="meta">Testing · Coverage</span><a class="row-title" href="/coverage/ipc/">IPC fuzz coverage report <span aria-hidden="true">↗</span></a><p class="row-desc">The generated coverage report accompanying my IPC fuzzing work.</p></li>
+</ul></section>
+<section><div class="section-heading"><span class="section-index">02</span><h2>Current</h2></div>
+<article class="project"><h3><a href="https://github.com/bitcoin/bitcoin">Bitcoin Core ↗</a></h3><p>Contributing code, reviewing pull requests, and testing changes. My interests include wallet and mempool behaviour, fuzzing, and multiprocess / IPC.</p><a class="more" href="https://github.com/bitcoin/bitcoin/pulls?q=is%3Apr+author%3Aenirox001">My pull requests →</a></article>
+<article class="project"><h3><a href="https://github.com/enirox001/btc-ipc">btc-ipc ↗</a></h3><p>A reusable Python IPC client with a reference indexer, benchmarks, and tests. The indexer tracks block metadata, ordered transaction IDs, and active-chain membership, including reorg reconciliation. It is an experiment for evaluating capabilities and their semantics; using a method successfully does not establish a stable API.</p><div class="tags"><span class="tag">Python</span><span class="tag">Cap’n Proto</span><span class="tag">SQLite</span></div></article>
+<article class="project"><h3><a href="https://github.com/bitcoin-core/libmultiprocess">libmultiprocess ↗</a></h3><p>Review and testing around the library behind Bitcoin Core’s multiprocess communication.</p><a class="more" href="https://github.com/enirox001/bitcoin-notes">Review notebook →</a></article>
+</section>
+<section><div class="section-heading"><span class="section-index">03</span><h2>Previous</h2></div><ul class="rows"><li><span class="meta">Web · Bitcoin</span><a class="row-title" href="https://github.com/enirox001/esplora">Esplora GUI <span aria-hidden="true">↗</span></a><p class="row-desc">Earlier work on the Bitcoin block explorer interface, including my Blockchain Commons internship.</p></li><li><span class="meta">Flutter · TypeScript · Python</span><a class="row-title" href="https://github.com/enirox001?tab=repositories">Web &amp; mobile projects <span aria-hidden="true">↗</span></a><p class="row-desc">Earlier projects and experiments with Flutter, TypeScript, and Python.</p></li></ul></section>
+</main>
+    <footer class="site-footer">
+      <span>© 2026 Enoch Azariah</span>
+      <div class="footer-links"><a href="https://github.com/enirox001">GitHub</a><a href="mailto:enochazariah@proton.me">Email</a><a href="https://github.com/enirox001/enirox001.github.io">Source</a></div>
+      <div class="theme-control"><label for="theme">Colour theme</label><select id="theme"><option value="gruvbox">Gruvbox</option><option value="light">Light</option><option value="dark">Dark</option></select></div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+[
+  {
+    "slug": "cpp-primer",
+    "title": "C++ Primer",
+    "authors": "Stanley B. Lippman, Josée Lajoie & Barbara E. Moo",
+    "status": "Reading",
+    "category": "C++ · Programming",
+    "note": "I’m working through C++ Primer to strengthen my C++ fundamentals alongside my Bitcoin Core work.",
+    "url": "https://www.informit.com/store/c-plus-plus-primer-9780321714114"
+  }
+]
