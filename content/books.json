@@ -7,5 +7,37 @@
     "category": "C++ · Programming",
     "note": "I’m working through C++ Primer to strengthen my C++ fundamentals alongside my Bitcoin Core work.",
     "url": "https://www.informit.com/store/c-plus-plus-primer-9780321714114"
+  },
+  {
+    "slug": "deep-work",
+    "title": "Deep Work",
+    "authors": "Cal Newport",
+    "status": "Finished",
+    "category": "Focus · Productivity",
+    "url": "https://www.hachettebookgroup.com/titles/cal-newport/deep-work/9781455586677/"
+  },
+  {
+    "slug": "the-magic-of-thinking-big",
+    "title": "The Magic of Thinking Big",
+    "authors": "David J. Schwartz",
+    "status": "Finished",
+    "category": "Personal development",
+    "url": "https://www.penguinrandomhouse.com/books/544074/the-magic-of-thinking-big-by-david-j-schwartz-phd/"
+  },
+  {
+    "slug": "mastering-bitcoin",
+    "title": "Mastering Bitcoin",
+    "authors": "Andreas M. Antonopoulos",
+    "status": "Finished",
+    "category": "Bitcoin · Programming",
+    "url": "https://aantonop.com/books/mastering-bitcoin/"
+  },
+  {
+    "slug": "onboarding-to-bitcoin-core",
+    "title": "Onboarding to Bitcoin Core",
+    "authors": "Will Clark & contributors",
+    "status": "Reading",
+    "category": "Bitcoin Core · Development",
+    "url": "https://bitcoincore.academy/"
   }
 ]

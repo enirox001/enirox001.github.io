@@ -30,7 +30,7 @@ JavaScript only controls the saved colour theme. Fonts are local system fonts.
 ## Bookshelf
 
 Each book has a unique URL-safe `slug`, a title, authors, a reading status,
-category, personal note, and publisher URL. Add actual reading entries to
+category, optional personal note, and book URL. Add actual reading entries to
 `content/books.json`, then run the build. Book artwork is an original typographic
 representation, not a reproduction of the publisher’s cover.
 
@@ -38,9 +38,16 @@ representation, not a reproduction of the publisher’s cover.
 
 - https://ludwigabap.com/ — Gruvbox palette, restrained typography and text-first layout.
 - https://ismaelsadeeq.github.io/ — personal introduction and a bookshelf with reading status.
-- https://achow101.com/ — articles, contact, and notable/current/previous project sections.
+- https://achow101.com/ — articles, contact, and current/previous project sections.
 
 Implementation is original. The site does not copy another person’s biography,
-book reviews, reading history, or proprietary fonts. Published notebook entries
-are linked to their existing GitHub files; unpublished article drafts are not
-presented as finished posts.
+book reviews, reading history, or proprietary fonts. Articles are authored here; review notebooks are not imported.
+
+## Publishing your own articles
+
+Add an entry to `content/articles.json` with `slug`, `title`, `date`
+(`YYYY-MM-DD`), and `description`. Put the article body in
+`content/articles/<slug>.html`, using ordinary HTML paragraphs and headings.
+Run `python3 scripts/build.py` and commit the source and generated pages.
+Keep the list in newest-first order. The homepage shows its first three entries.
+The list starts empty until you publish your own writing.
